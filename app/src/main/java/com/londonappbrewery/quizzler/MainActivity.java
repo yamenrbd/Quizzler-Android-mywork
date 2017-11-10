@@ -2,6 +2,11 @@ package com.londonappbrewery.quizzler;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
@@ -9,6 +14,13 @@ public class MainActivity extends Activity {
 
 
     // TODO: Declare member variables here:
+    Button trueButton ;
+    Button falsButton ;
+    TextView question ;
+    ProgressBar mProgressBar ;
+    TextView score ;
+
+
 
 
     // TODO: Uncomment to create question bank
@@ -32,8 +44,24 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        trueButton = (Button)findViewById(R.id.true_button);
+        falsButton = (Button)findViewById(R.id.false_button);
+        question = (TextView)findViewById(R.id.question_text_view);
+        mProgressBar = (ProgressBar)findViewById(R.id.progress_bar);
+        score = (TextView)findViewById(R.id.score);
 
-
-
+        trueButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"true button have been clicked",Toast.LENGTH_LONG).show();
+            }
+        });
+        falsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"the false button have been clicked",Toast.LENGTH_LONG).show();
+            }
+        });
     }
+
 }

@@ -61,7 +61,7 @@
             android:textStyle="bold"
             style="@style/Base.Widget.AppCompat.Button.Borderless"
             android:background="@color/colorTrueButton"
-            android:textSize="20sp" />
+            android:textSize="20sp"/>
 
         <Button
             android:layout_width="150dp"
