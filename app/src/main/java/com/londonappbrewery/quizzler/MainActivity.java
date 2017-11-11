@@ -62,14 +62,20 @@ public class MainActivity extends Activity {
         trueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                checkAnswer(true);
                 updateQuestion();
 
+
             }
+
+
         });
         falsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                checkAnswer(false);
                 updateQuestion();
+
             }
         });
     }
@@ -77,6 +83,16 @@ public class MainActivity extends Activity {
         mIndex= (mIndex+1) % mQuestionBank.length;
         mQuestion = mQuestionBank[mIndex].getQuestionId();
         mQuestionTextView.setText(mQuestion);
+    }
+
+    public void checkAnswer(boolean userSelection){
+        boolean correctAnswer = mQuestionBank[mIndex].isAnswer();
+
+        if(userSelection == correctAnswer){
+            Toast.makeText(getApplicationContext(),R.string.correct_toast,Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(getApplicationContext(),R.string.incorrect_toast,Toast.LENGTH_SHORT).show();
+        }
     }
 
 }
