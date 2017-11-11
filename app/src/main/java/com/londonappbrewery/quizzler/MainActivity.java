@@ -16,7 +16,7 @@ public class MainActivity extends Activity {
     // TODO: Declare member variables here:
     Button trueButton ;
     Button falsButton ;
-    TextView question ;
+    TextView mQuestionTextView ;
     ProgressBar mProgressBar ;
     TextView score ;
     int mQuestion;
@@ -48,13 +48,13 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         trueButton = (Button)findViewById(R.id.true_button);
         falsButton = (Button)findViewById(R.id.false_button);
-        question = (TextView)findViewById(R.id.question_text_view);
+        mQuestionTextView = (TextView)findViewById(R.id.question_text_view);
         mProgressBar = (ProgressBar)findViewById(R.id.progress_bar);
         score = (TextView)findViewById(R.id.score);
 
 
         mQuestion = mQuestionBank[mIndex].getQuestionId();
-        question.setText(mQuestion);
+        mQuestionTextView.setText(mQuestion);
 
 
 
@@ -62,15 +62,21 @@ public class MainActivity extends Activity {
         trueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"true button have been clicked",Toast.LENGTH_LONG).show();
+                updateQuestion();
+
             }
         });
         falsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"the false button have been clicked",Toast.LENGTH_LONG).show();
+                updateQuestion();
             }
         });
+    }
+    public void updateQuestion(){
+        mIndex= (mIndex+1) % mQuestionBank.length;
+        mQuestion = mQuestionBank[mIndex].getQuestionId();
+        mQuestionTextView.setText(mQuestion);
     }
 
 }
