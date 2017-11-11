@@ -1,7 +1,9 @@
 package com.londonappbrewery.quizzler;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -18,11 +20,10 @@ public class MainActivity extends Activity {
     Button falsButton ;
     TextView mQuestionTextView ;
     ProgressBar mProgressBar ;
-    TextView score ;
+    TextView mScoreTextView ;
     int mQuestion;
     int mIndex;
-
-
+    int score=0;
 
 
     // TODO: Uncomment to create question bank
@@ -42,6 +43,8 @@ public class MainActivity extends Activity {
             new TrueFalse(R.string.question_13,true)
     };
 
+    final int progress = (int) Math.ceil(100.0/mQuestionBank.length);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,13 +53,9 @@ public class MainActivity extends Activity {
         falsButton = (Button)findViewById(R.id.false_button);
         mQuestionTextView = (TextView)findViewById(R.id.question_text_view);
         mProgressBar = (ProgressBar)findViewById(R.id.progress_bar);
-        score = (TextView)findViewById(R.id.score);
-
-
+        mScoreTextView = (TextView)findViewById(R.id.score);
         mQuestion = mQuestionBank[mIndex].getQuestionId();
         mQuestionTextView.setText(mQuestion);
-
-
 
 
         trueButton.setOnClickListener(new View.OnClickListener() {
@@ -64,23 +63,34 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 checkAnswer(true);
                 updateQuestion();
-
-
             }
-
-
         });
         falsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 checkAnswer(false);
                 updateQuestion();
-
             }
         });
     }
     public void updateQuestion(){
-        mIndex= (mIndex+1) % mQuestionBank.length;
+        mIndex = (mIndex+1)%mQuestionBank.length;
+
+        mProgressBar.incrementProgressBy(progress);
+        if(mIndex==0){
+            AlertDialog.Builder alert = new AlertDialog.Builder(this);
+            alert.setTitle("Game Over");
+            alert.setCancelable(false);
+            alert.setMessage("you score "+score+"point!");
+            alert.setPositiveButton("colse application ", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    finish();
+                }
+            });
+            alert.show();
+        }
+
         mQuestion = mQuestionBank[mIndex].getQuestionId();
         mQuestionTextView.setText(mQuestion);
     }
@@ -90,8 +100,12 @@ public class MainActivity extends Activity {
 
         if(userSelection == correctAnswer){
             Toast.makeText(getApplicationContext(),R.string.correct_toast,Toast.LENGTH_SHORT).show();
+            score++;
+            mScoreTextView.setText(score+"/"+mQuestionBank.length);
+
         }else{
             Toast.makeText(getApplicationContext(),R.string.incorrect_toast,Toast.LENGTH_SHORT).show();
+
         }
     }
 
