@@ -48,6 +48,17 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if(savedInstanceState != null){
+            score = savedInstanceState.getInt("scoreKey");
+            mIndex = savedInstanceState.getInt("indexKey");
+        }else{
+
+            score=0;
+            mIndex=0;
+        }
+
+
         setContentView(R.layout.activity_main);
         trueButton = (Button)findViewById(R.id.true_button);
         falsButton = (Button)findViewById(R.id.false_button);
@@ -57,6 +68,8 @@ public class MainActivity extends Activity {
         mQuestion = mQuestionBank[mIndex].getQuestionId();
         mQuestionTextView.setText(mQuestion);
 
+
+        mScoreTextView.setText(score+"/"+mQuestionBank.length);
 
         trueButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,4 +122,11 @@ public class MainActivity extends Activity {
         }
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putInt("scoreKey",score);
+        outState.putInt("indexKey",mIndex);
+    }
 }
